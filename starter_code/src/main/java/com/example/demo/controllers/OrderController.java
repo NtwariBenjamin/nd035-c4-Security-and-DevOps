@@ -28,7 +28,7 @@ public class OrderController {
 	@Autowired
 	private OrderRepository orderRepository;
 	
-	
+
 	@PostMapping("/submit/{username}")
 	public ResponseEntity<UserOrder> submit(@PathVariable String username) {
 		User user = userRepository.findByUsername(username);
@@ -38,6 +38,7 @@ public class OrderController {
 		UserOrder order = UserOrder.createFromCart(user.getCart());
 		orderRepository.save(order);
 		return ResponseEntity.ok(order);
+
 	}
 	
 	@GetMapping("/history/{username}")

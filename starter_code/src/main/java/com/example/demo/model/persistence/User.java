@@ -26,12 +26,34 @@ public class User {
 	@Column(nullable = false, unique = true)
 	@JsonProperty
 	private String username;
+	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+	@Column(nullable = false)
+	private String password;
+	@JsonProperty
+	private String salt;
 	
 	@OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "cart_id", referencedColumnName = "id")
 	@JsonIgnore
     private Cart cart;
-	
+
+	public User() {
+	}
+
+	public User(long id, String username, String password) {
+		this.id = id;
+		this.username = username;
+		this.password = password;
+	}
+
+	public String getSalt() {
+		return salt;
+	}
+
+	public void setSalt(String salt) {
+		this.salt = salt;
+	}
+
 	public Cart getCart() {
 		return cart;
 	}
@@ -55,7 +77,12 @@ public class User {
 	public void setUsername(String username) {
 		this.username = username;
 	}
-	
-	
-	
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
 }
