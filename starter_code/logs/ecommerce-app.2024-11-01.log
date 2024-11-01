@@ -13,3 +13,13 @@
 08:27:52.364 [main] ERROR c.e.demo.controllers.CartController - user can not be removed test because username is null
 08:27:52.365 [main] ERROR c.e.demo.controllers.CartController - user can not be removed 1 because userId is not found
 08:27:52.366 [main] ERROR c.e.demo.controllers.CartController - user test removed
+15:17:29.981 [main] DEBUG c.e.demo.controllers.UserController - createUser called with username test
+15:17:29.991 [main] ERROR c.e.demo.controllers.UserController - Cannot create user test because the password is invalid
+15:17:30.195 [main] DEBUG c.e.demo.controllers.UserController - createUser called with username test
+15:17:30.203 [main] INFO  c.e.demo.controllers.UserController - New user test created
+15:17:30.214 [main] DEBUG c.e.demo.controllers.UserController - findByUserName called with username Rurangwa
+15:17:30.218 [main] DEBUG c.e.demo.controllers.UserController - findById called with id 0
+15:17:30.226 [main] DEBUG c.e.demo.controllers.UserController - findById called with id 1
+15:17:30.289 [main] DEBUG c.e.demo.controllers.UserController - createUser called with username test
+15:17:30.303 [main] ERROR c.e.demo.controllers.UserController - Cannot create user test because the password is invalid
+15:17:30.307 [main] DEBUG c.e.demo.controllers.UserController - findByUserName called with username test
