@@ -1,11 +1,7 @@
 package com.example.demo.controllers;
 
-import java.security.SecureRandom;
-import java.util.Base64;
-import java.util.List;
-import java.util.Optional;
 
-import com.example.demo.service.HashService;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,13 +20,10 @@ import com.example.demo.model.persistence.repositories.CartRepository;
 import com.example.demo.model.persistence.repositories.UserRepository;
 import com.example.demo.model.requests.CreateUserRequest;
 
-
-
 @RestController
 @RequestMapping("/api/user")
 public class UserController {
-	private static final Logger log= LoggerFactory.getLogger(UserController.class);
-	private  HashService hashService;
+	private static final Logger log = LoggerFactory.getLogger(UserController.class);
 	
 	@Autowired
 	private UserRepository userRepository;
@@ -38,50 +31,48 @@ public class UserController {
 	@Autowired
 	private CartRepository cartRepository;
 	@Autowired
-	BCryptPasswordEncoder bCryptPasswordEncoder;
-
-
-	public UserController(){}
-
-
-	@GetMapping
-	public ResponseEntity<List<User>> allUsers(){
-		return ResponseEntity.of(Optional.of(userRepository.findAll()));
+	private BCryptPasswordEncoder bCryptPasswordEncoder;
+	public UserController(
+			UserRepository userRepository,
+			CartRepository cartRepository,
+			BCryptPasswordEncoder bCryptPasswordEncoder
+	) {
+		this.userRepository = userRepository;
+		this.cartRepository = cartRepository;
+		this.bCryptPasswordEncoder = bCryptPasswordEncoder;
 	}
 
 	@GetMapping("/id/{id}")
 	public ResponseEntity<User> findById(@PathVariable Long id) {
+		log.debug("findById called with id {}", id);
 		return ResponseEntity.of(userRepository.findById(id));
 	}
 	
 	@GetMapping("/{username}")
 	public ResponseEntity<User> findByUserName(@PathVariable String username) {
+		log.debug("findByUserName called with username {}",username);
 		User user = userRepository.findByUsername(username);
 		return user == null ? ResponseEntity.notFound().build() : ResponseEntity.ok(user);
 	}
 	
 	@PostMapping("/create")
 	public ResponseEntity<User> createUser(@RequestBody CreateUserRequest createUserRequest) {
+		log.debug("createUser called with username {}", createUserRequest.getUsername());
 		User user = new User();
 		user.setUsername(createUserRequest.getUsername());
-		log.info("Username created with: ",createUserRequest.getUsername());
 		Cart cart = new Cart();
 		cartRepository.save(cart);
 		user.setCart(cart);
-		if (createUserRequest.getPassword().length()<7||
-				!createUserRequest.getPassword().equals(createUserRequest.getConfirmPassword())){
+		if (
+				createUserRequest.getPassword().length() <= 6 ||
+						!createUserRequest.getPassword().equals(createUserRequest.getConfirmPassword())
+		) {
+			log.error("Cannot create user {} because the password is invalid", createUserRequest.getUsername());
 			return ResponseEntity.badRequest().build();
 		}
-//		SecureRandom random=new SecureRandom();
-//		byte[] salt=new byte[16];
-//		random.nextBytes(salt);
-//		String encodedSalt= Base64.getEncoder().encodeToString(salt);
-//		String hashedPassword=hashService.getHashedValue(createUserRequest.getPassword(),encodedSalt);
-//		user.setSalt(encodedSalt);
 		user.setPassword(bCryptPasswordEncoder.encode(createUserRequest.getPassword()));
-		log.info("Password Before Encoding: ",createUserRequest.getPassword());
-		log.info("The Encoded Password: ",bCryptPasswordEncoder.encode(createUserRequest.getPassword()));
 		userRepository.save(user);
+		log.info("New user {} created", createUserRequest.getUsername());
 		return ResponseEntity.ok(user);
 	}
 	

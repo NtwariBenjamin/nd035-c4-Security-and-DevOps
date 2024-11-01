@@ -3,22 +3,24 @@ package com.example.demo;
 import java.lang.reflect.Field;
 
 public class TestUtils {
-    public static void injectObjects(Object target,String fieldName,Object toInject){
-        boolean wasPrivate=false;
+    public static void injectObjects(Object target, String fieldName, Object toInject){
+
+        boolean wasPrivate = false;
+
         try {
-            Field field = target.getClass().getDeclaredField(fieldName);
-            if (!field.isAccessible()){
-                field.setAccessible(true);
-                wasPrivate=true;
+            Field f = target.getClass().getDeclaredField(fieldName);
+            if (!f.canAccess(target)){
+                f.setAccessible(true);
+                wasPrivate = true;
             }
-            field.set(target,toInject);
+            f.set(target, toInject);
             if (wasPrivate){
-                field.setAccessible(false);
+                f.setAccessible(false);
             }
         } catch (NoSuchFieldException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
         } catch (IllegalAccessException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
         }
     }
 }

@@ -1,0 +1,15 @@
+08:27:52.278 [main] DEBUG c.e.demo.controllers.CartController - removeFromCart called with usernameRurangwa
+08:27:52.340 [main] DEBUG c.e.demo.controllers.CartController - addToCart called with username test
+08:27:52.346 [main] DEBUG c.e.demo.controllers.CartController - addToCart called with username test
+08:27:52.347 [main] ERROR c.e.demo.controllers.CartController - Item can not be added to cart 1 because the getItemId is Empty
+08:27:52.351 [main] INFO  c.e.demo.controllers.CartController - Item 1 added to cart
+08:27:52.355 [main] DEBUG c.e.demo.controllers.CartController - addToCart called with username Rurangwa
+08:27:52.357 [main] DEBUG c.e.demo.controllers.CartController - removeFromCart called with usernametest
+08:27:52.358 [main] ERROR c.e.demo.controllers.CartController - user can not be removed test because username is null
+08:27:52.362 [main] DEBUG c.e.demo.controllers.CartController - addToCart called with username test
+08:27:52.362 [main] ERROR c.e.demo.controllers.CartController - Item can not be added to cart 1 because the getItemId is Empty
+08:27:52.363 [main] INFO  c.e.demo.controllers.CartController - Item 1 added to cart
+08:27:52.363 [main] DEBUG c.e.demo.controllers.CartController - removeFromCart called with usernametest
+08:27:52.364 [main] ERROR c.e.demo.controllers.CartController - user can not be removed test because username is null
+08:27:52.365 [main] ERROR c.e.demo.controllers.CartController - user can not be removed 1 because userId is not found
+08:27:52.366 [main] ERROR c.e.demo.controllers.CartController - user test removed
